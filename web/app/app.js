@@ -4,6 +4,7 @@
 angular.module('myApp', [
     'ngRoute',
     'ui-notification',
+    'zingchart-angularjs',
     'myApp.home',
     'myApp.wallets',
     'myApp.settings',
@@ -14,7 +15,8 @@ angular.module('myApp', [
     'myApp.buyOrders',
     'myApp.sellOrders',
     'myApp.stringUtils',
-    'myApp.webSocket'
+    'myApp.webSocket',
+    'myApp.charts.market-depth'
 ]).
 config(['$locationProvider', '$routeProvider', 'NotificationProvider', function($locationProvider, $routeProvider, NotificationProvider) {
     NotificationProvider.setOptions({
