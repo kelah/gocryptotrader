@@ -7,6 +7,7 @@ import (
 	"github.com/thrasher-/gocryptotrader/common"
 	"github.com/thrasher-/gocryptotrader/currency"
 	"github.com/thrasher-/gocryptotrader/exchanges"
+	"github.com/thrasher-/gocryptotrader/exchanges/orderbook"
 	"github.com/thrasher-/gocryptotrader/exchanges/stats"
 	"github.com/thrasher-/gocryptotrader/exchanges/ticker"
 )
@@ -72,7 +73,7 @@ func (o *OKCoin) Run() {
 }
 
 func (o *OKCoin) GetTickerPrice(currency string) (ticker.TickerPrice, error) {
-	tickerNew, err := ticker.GetTicker(o.GetName(), currency[0:3], currency[3:])
+	tickerNew, err := ticker.GetTicker(o.GetName(), common.StringToUpper(currency[0:3]), common.StringToUpper(currency[4:]))
 	if err == nil {
 		return tickerNew, nil
 	}
@@ -94,10 +95,64 @@ func (o *OKCoin) GetTickerPrice(currency string) (ticker.TickerPrice, error) {
 	return tickerPrice, nil
 }
 
-//TODO support for retrieving holdings from OKCOIN
-//GetExchangeAccountInfo : Retrieves balances for all enabled currencies for the OKCoin exchange
+func (o *OKCoin) GetOrderbookEx(currency string) (orderbook.OrderbookBase, error) {
+	ob, err := orderbook.GetOrderbook(o.GetName(), common.StringToUpper(currency[0:3]), common.StringToUpper(currency[4:]))
+	if err == nil {
+		return ob, nil
+	}
+
+	var orderBook orderbook.OrderbookBase
+	orderbookNew, err := o.GetOrderBook(currency, 200, false)
+	if err != nil {
+		return orderBook, err
+	}
+
+	for x, _ := range orderbookNew.Bids {
+		data := orderbookNew.Bids[x]
+		orderBook.Bids = append(orderBook.Bids, orderbook.OrderbookItem{Amount: data[1], Price: data[0]})
+	}
+
+	for x, _ := range orderbookNew.Asks {
+		data := orderbookNew.Asks[x]
+		orderBook.Asks = append(orderBook.Asks, orderbook.OrderbookItem{Amount: data[1], Price: data[0]})
+	}
+	orderBook.FirstCurrency = common.StringToUpper(currency[0:3])
+	orderBook.SecondCurrency = common.StringToUpper(currency[4:])
+	orderbook.ProcessOrderbook(o.GetName(), orderBook.FirstCurrency, orderBook.SecondCurrency, orderBook)
+	return orderBook, nil
+}
+
 func (e *OKCoin) GetExchangeAccountInfo() (exchange.ExchangeAccountInfo, error) {
 	var response exchange.ExchangeAccountInfo
 	response.ExchangeName = e.GetName()
+	assets, err := e.GetUserInfo()
+	if err != nil {
+		return response, err
+	}
+
+	response.Currencies = append(response.Currencies, exchange.ExchangeAccountCurrencyInfo{
+		CurrencyName: "BTC",
+		TotalValue:   assets.Info.Funds.Free.BTC,
+		Hold:         assets.Info.Funds.Freezed.BTC,
+	})
+
+	response.Currencies = append(response.Currencies, exchange.ExchangeAccountCurrencyInfo{
+		CurrencyName: "LTC",
+		TotalValue:   assets.Info.Funds.Free.LTC,
+		Hold:         assets.Info.Funds.Freezed.LTC,
+	})
+
+	response.Currencies = append(response.Currencies, exchange.ExchangeAccountCurrencyInfo{
+		CurrencyName: "USD",
+		TotalValue:   assets.Info.Funds.Free.USD,
+		Hold:         assets.Info.Funds.Freezed.USD,
+	})
+
+	response.Currencies = append(response.Currencies, exchange.ExchangeAccountCurrencyInfo{
+		CurrencyName: "CNY",
+		TotalValue:   assets.Info.Funds.Free.CNY,
+		Hold:         assets.Info.Funds.Freezed.CNY,
+	})
+
 	return response, nil
 }

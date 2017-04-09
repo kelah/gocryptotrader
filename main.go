@@ -30,6 +30,7 @@ import (
 	"github.com/thrasher-/gocryptotrader/exchanges/okcoin"
 	"github.com/thrasher-/gocryptotrader/exchanges/poloniex"
 	"github.com/thrasher-/gocryptotrader/exchanges/ticker"
+	"github.com/thrasher-/gocryptotrader/portfolio"
 	"github.com/thrasher-/gocryptotrader/smsglobal"
 )
 
@@ -55,6 +56,7 @@ type ExchangeMain struct {
 
 type Bot struct {
 	config    *config.Config
+	portfolio *portfolio.PortfolioBase
 	exchange  ExchangeMain
 	exchanges []exchange.IBotExchange
 	tickers   []ticker.Ticker
@@ -147,7 +149,10 @@ func main() {
 
 	log.Println("Successfully retrieved config currencies.")
 
-	go StartPortfolioWatcher()
+	bot.portfolio = &portfolio.Portfolio
+	bot.portfolio.SeedPortfolio(bot.config.Portfolio)
+	SeedExchangeAccountInfo(GetAllEnabledExchangeAccountInfo().Data)
+	go portfolio.StartPortfolioWatcher()
 
 	if bot.config.Webserver.Enabled {
 		err := bot.config.CheckWebserverConfigValues()
@@ -201,6 +206,7 @@ func HandleInterrupt() {
 
 func Shutdown() {
 	log.Println("Bot shutting down..")
+	bot.config.Portfolio = portfolio.Portfolio
 	err := bot.config.SaveConfig()
 
 	if err != nil {
@@ -211,4 +217,33 @@ func Shutdown() {
 
 	log.Println("Exiting.")
 	os.Exit(1)
+}
+
+func SeedExchangeAccountInfo(data []exchange.ExchangeAccountInfo) {
+	if len(data) == 0 {
+		return
+	}
+
+	port := portfolio.GetPortfolio()
+
+	for i := 0; i < len(data); i++ {
+		exchangeName := data[i].ExchangeName
+		for j := 0; j < len(data[i].Currencies); j++ {
+			currencyName := data[i].Currencies[j].CurrencyName
+			onHold := data[i].Currencies[j].Hold
+			avail := data[i].Currencies[j].TotalValue
+			total := onHold + avail
+
+			if total <= 0 {
+				continue
+			}
+
+			if !port.ExchangeAddressExists(exchangeName, currencyName) {
+				port.Addresses = append(port.Addresses, portfolio.PortfolioAddress{Address: exchangeName, CoinType: currencyName, Balance: total, Decscription: portfolio.PORTFOLIO_ADDRESS_EXCHANGE})
+			} else {
+				port.UpdateExchangeAddressBalance(exchangeName, currencyName, total)
+			}
+		}
+	}
+
 }

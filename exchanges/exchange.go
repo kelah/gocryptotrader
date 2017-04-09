@@ -6,11 +6,13 @@ import (
 
 	"github.com/thrasher-/gocryptotrader/common"
 	"github.com/thrasher-/gocryptotrader/config"
+	"github.com/thrasher-/gocryptotrader/exchanges/orderbook"
 	"github.com/thrasher-/gocryptotrader/exchanges/ticker"
 )
 
 const (
 	WarningBase64DecryptSecretKeyFailed = "WARNING -- Exchange %s unable to base64 decode secret key.. Disabling Authenticated API support."
+	ErrExchangeNotFound                 = "Exchange not found in dataset."
 )
 
 //ExchangeAccountInfo : Generic type to hold each exchange's holdings in all enabled currencies
@@ -50,6 +52,7 @@ type IBotExchange interface {
 	GetName() string
 	IsEnabled() bool
 	GetTickerPrice(currency string) (ticker.TickerPrice, error)
+	GetOrderbookEx(currency string) (orderbook.OrderbookBase, error)
 	GetEnabledCurrencies() []string
 	GetExchangeAccountInfo() (ExchangeAccountInfo, error)
 }
