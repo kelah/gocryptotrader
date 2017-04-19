@@ -129,6 +129,23 @@ func TestStringContains(t *testing.T) {
 	}
 }
 
+func TestDataContains(t *testing.T) {
+	t.Parallel()
+	originalHaystack := []string{"hello", "world", "data", "Contains", "string"}
+	originalNeedle := "world"
+	anotherNeedle := "thing"
+	expectedOutput := true
+	expectedOutputTwo := false
+	actualResult := DataContains(originalHaystack, originalNeedle)
+	if actualResult != expectedOutput {
+		t.Error(fmt.Sprintf("Test failed. Expected '%t'. Actual '%t'", expectedOutput, actualResult))
+	}
+	actualResult = DataContains(originalHaystack, anotherNeedle)
+	if actualResult != expectedOutputTwo {
+		t.Error(fmt.Sprintf("Test failed. Expected '%t'. Actual '%t'", expectedOutputTwo, actualResult))
+	}
+}
+
 func TestJoinStrings(t *testing.T) {
 	t.Parallel()
 	originalInputOne := []string{"hello", "moto"}
@@ -268,5 +285,22 @@ func TestUnixTimestampStrToTime(t *testing.T) {
 
 	if actualResult.UTC().String() != expectedOutput {
 		t.Error(fmt.Sprintf("Test failed. Expected '%s'. Actual '%s'.", expectedOutput, actualResult))
+	}
+}
+
+func TestGetURIPath(t *testing.T) {
+	t.Parallel()
+	// mapping of input vs expected result
+	testTable := map[string]string{
+		"https://api.gdax.com/accounts":         "/accounts",
+		"https://api.gdax.com/accounts?a=1&b=2": "/accounts?a=1&b=2",
+		"ht:tp:/invalidurl":                     "",
+	}
+	for testInput, expectedOutput := range testTable {
+		actualOutput := GetURIPath(testInput)
+		if actualOutput != expectedOutput {
+			t.Error(fmt.Sprintf("Test failed. Expected '%s'. Actual '%s'.",
+				expectedOutput, actualOutput))
+		}
 	}
 }
