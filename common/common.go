@@ -1,6 +1,7 @@
 package common
 
 import (
+	//"bytes"
 	"crypto/hmac"
 	"crypto/md5"
 	"crypto/sha1"
@@ -11,6 +12,7 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"hash"
 	"io"
 	"io/ioutil"
@@ -119,6 +121,11 @@ func StringSliceDifference(slice1 []string, slice2 []string) []string {
 
 func StringContains(input, substring string) bool {
 	return strings.Contains(input, substring)
+}
+
+func DataContains(haystack []string, needle string) bool {
+	data := strings.Join(haystack, ",")
+	return strings.Contains(data, needle)
 }
 
 func JoinStrings(input []string, seperator string) string {
@@ -252,8 +259,8 @@ func SendHTTPGetRequest(url string, jsonDecode bool, result interface{}) (err er
 
 	if jsonDecode {
 		err := JSONDecode(contents, &result)
-
 		if err != nil {
+			log.Println(string(contents[:]))
 			return err
 		}
 	} else {
@@ -337,4 +344,16 @@ func WriteFile(file string, data []byte) error {
 		return err
 	}
 	return nil
+}
+
+// GetURIPath returns the path of a URL given a URL
+func GetURIPath(uri string) string {
+	urip, err := url.Parse(uri)
+	if err != nil {
+		return ""
+	}
+	if urip.RawQuery != "" {
+		return fmt.Sprintf("%s?%s", urip.Path, urip.RawQuery)
+	}
+	return urip.Path
 }
