@@ -7,13 +7,11 @@ angular.module('goCryptoWeb.enabledExchanges', []).component('enabledexchanges',
             $http({
                 method: 'GET',
                 url: '/data/all-enabled-currencies'
-            }).
-            success(function(data, status, headers, config) {
-                $scope.exchanges = data.data;
+            }).then(function(response) {
+                $scope.exchanges = response.data.data;
                 $scope.reloadDashboardWithExchangeCurrency($scope.exchanges[0], $scope.exchanges[0].exchangeValues[0]);
                 Notification.info("Retrieved latest data");
-            }).
-            error(function(data, status, headers, config) {
+            }).catch(function(error) {
                 console.log('error');
             });
         };

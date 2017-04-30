@@ -19,17 +19,28 @@ angular.module('goCryptoWeb', [
     'goCryptoWeb.charts.market-depth-angular'
 ]).
 config(['$locationProvider', '$routeProvider', 'NotificationProvider', function($locationProvider, $routeProvider, NotificationProvider) {
-    NotificationProvider.setOptions({
-        delay: 5000,
-        startTop: 60,
-        startRight: 10,
-        verticalSpacing: 10,
-        horizontalSpacing: 20,
-        positionX: 'right',
-        positionY: 'top'
-    });
+        NotificationProvider.setOptions({
+            delay: 5000,
+            startTop: 60,
+            startRight: 10,
+            verticalSpacing: 10,
+            horizontalSpacing: 20,
+            positionX: 'right',
+            positionY: 'top'
+        });
 
-    $locationProvider.hashPrefix('!');
+        $locationProvider.hashPrefix('!');
 
-    $routeProvider.otherwise({ redirectTo: '/' });
-}]);
+        $routeProvider.otherwise({ redirectTo: '/' });
+    }])
+    .config(['ChartJsProvider', function(ChartJsProvider) {
+        // Configure all charts
+        ChartJsProvider.setOptions({
+            colours: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'],
+            responsive: true
+        });
+        // Configure all line charts
+        ChartJsProvider.setOptions('Line', {
+            datasetFill: false
+        });
+    }]);

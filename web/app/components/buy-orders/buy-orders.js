@@ -16,9 +16,9 @@ angular.module('goCryptoWeb.buyOrders',[]).component('buyorders', {
 
      $scope.getRecentBuyOrders = function() {
        var exchData = {params : {exchangeName: '', currencyPair:''}};
-       $http.get('/GetBuyOrdersForCurrencyPair' , exchData).success(function(data) {
+       $http.get('/GetBuyOrdersForCurrencyPair' , exchData).then(function(data) {
           $scope.buyOrders = data;
-       }).error(function() {
+       }).catch(function() {
            $scope.buyOrders = [
           {price:12,currencyOneAmount:12,currencyTwoAmount:13,sum:1111},
           {price:13,currencyOneAmount:15,currencyTwoAmount:13,sum:11231},
