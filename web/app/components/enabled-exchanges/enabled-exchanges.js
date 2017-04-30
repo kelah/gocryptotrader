@@ -1,4 +1,4 @@
-angular.module('myApp.enabledExchanges', []).component('enabledexchanges', {
+angular.module('goCryptoWeb.enabledExchanges', []).component('enabledexchanges', {
     templateUrl: '/components/enabled-exchanges/enabled-exchanges.html',
     controller: 'EnabledExchangesController',
     controller: function($scope, $http, Notification, $rootScope) {

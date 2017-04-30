@@ -1,5 +1,5 @@
 
-angular.module('myApp.buyOrders',[]).component('buyorders', {
+angular.module('goCryptoWeb.buyOrders',[]).component('buyorders', {
   templateUrl: '/components/buy-orders/buy-orders.html',
   controller:'BuyOrdersController',
   controller: function ($scope, $http, Notification, $rootScope) {

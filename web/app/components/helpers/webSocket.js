@@ -1,4 +1,4 @@
-angular.module('myApp.webSocket', ['ngWebSocket'])
+angular.module('goCryptoWeb.webSocket', ['ngWebSocket'])
     .factory('webSocket', function($websocket) {
         // Open a WebSocket connection 
         var dataStream = $websocket('ws://localhost:9050/');

@@ -1,5 +1,5 @@
 
-angular.module('myApp.sell',[]).component('sell', {
+angular.module('goCryptoWeb.sell',[]).component('sell', {
   templateUrl: '/components/sell/sell.html',
   controller:'SellController',
   controller: function ($scope, $http, Notification, $rootScope) {
