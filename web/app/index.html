@@ -30,7 +30,12 @@
 
     <script src="/bower_components/chart.js/dist/Chart.js"></script>
     <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
-
+    <script>
+        //This is not for final use. Just developer use to stop clicking the URL while developing
+        window.setTimeout(function() {
+            $('a[href$=".com/javascript-charts/"]').remove();
+        }, 2000);
+    </script>
 
 </head>
 
@@ -68,23 +73,27 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
 
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/amcharts.js"></script>
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/serial.js"></script>
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/amstock.js"></script>
+    <script type="text/javascript" src="/bower_components/amcharts-angular/dist/amChartsDirective.js"></script>
 
-
-    <script src="/app.js"></script>
-    <script src="/views/settings/settings.js"></script>
-    <script src="/views/home/home.js"></script>
-    <script src="/views/wallets/wallets.js"></script>
-    <script src="/components/buy/buy.js"></script>
-    <script src="/components/sell/sell.js"></script>
-    <script src="/components/enabled-exchanges/enabled-exchanges.js"></script>
-    <script src="/components/version/version.js"></script>
-    <script src="/components/buy-orders/buy-orders.js"></script>
-    <script src="/components/sell-orders/sell-orders.js"></script>
-    <script src="/components/version/version-directive.js"></script>
-    <script src="/components/version/interpolate-filter.js"></script>
-    <script src="/components/helpers/stringUtils.js"></script>
-    <script src="/components/helpers/webSocket.js"></script>
-    <script src="/components/charts/market-depth-angular/market-depth-angular.js"></script>
+    <script type="text/javascript" src="/app.js"></script>
+    <script type="text/javascript" src="/views/settings/settings.js"></script>
+    <script type="text/javascript" src="/views/home/home.js"></script>
+    <script type="text/javascript" src="/views/wallets/wallets.js"></script>
+    <script type="text/javascript" src="/components/buy/buy.js"></script>
+    <script type="text/javascript" src="/components/sell/sell.js"></script>
+    <script type="text/javascript" src="/components/enabled-exchanges/enabled-exchanges.js"></script>
+    <script type="text/javascript" src="/components/version/version.js"></script>
+    <script type="text/javascript" src="/components/buy-orders/buy-orders.js"></script>
+    <script type="text/javascript" src="/components/sell-orders/sell-orders.js"></script>
+    <script type="text/javascript" src="/components/version/version-directive.js"></script>
+    <script type="text/javascript" src="/components/version/interpolate-filter.js"></script>
+    <script type="text/javascript" src="/components/helpers/stringUtils.js"></script>
+    <script type="text/javascript" src="/components/helpers/webSocket.js"></script>
+    <script type="text/javascript" src="/components/charts/market-depth-angular/market-depth-angular.js"></script>
+    <script type="text/javascript" src="/components/charts/market-depth-amchart/market-depth-amchart.js"></script>
 
 
 </body>

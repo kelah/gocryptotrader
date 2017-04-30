@@ -5,6 +5,7 @@ angular.module('goCryptoWeb', [
     'ngRoute',
     'ui-notification',
     'chart.js',
+    'amChartsDirective',
     'goCryptoWeb.home',
     'goCryptoWeb.wallets',
     'goCryptoWeb.settings',
@@ -16,7 +17,8 @@ angular.module('goCryptoWeb', [
     'goCryptoWeb.sellOrders',
     'goCryptoWeb.stringUtils',
     'goCryptoWeb.webSocket',
-    'goCryptoWeb.charts.market-depth-angular'
+    'goCryptoWeb.charts.market-depth-angular',
+    'goCryptoWeb.charts.market-depth-amchart'
 ]).
 config(['$locationProvider', '$routeProvider', 'NotificationProvider', function($locationProvider, $routeProvider, NotificationProvider) {
         NotificationProvider.setOptions({
