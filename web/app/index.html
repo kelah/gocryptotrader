@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="goCryptoWeb" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="goCryptoWeb" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="goCryptoWeb" class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
-<html lang="en" ng-app="myApp" class="no-js">
+<html lang="en" ng-app="goCryptoWeb" class="no-js">
 <!--<![endif]-->
 
 <head>
@@ -23,15 +23,20 @@
     <script src="/bower_components/jquery/dist/jquery.min.js"></script>
     <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
-
     <script src="/bower_components/angular/angular.js"></script>
-
-
     <script src="/bower_components/angular-route/angular-route.js"></script>
     <script src="/bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
     <script src="/bower_components/angular-websocket/dist/angular-websocket.js"></script>
-    
- 
+
+    <script src="/bower_components/chart.js/dist/Chart.js"></script>
+    <script src="/bower_components/angular-chart.js/dist/angular-chart.js"></script>
+    <script>
+        //This is not for final use. Just developer use to stop clicking the URL while developing
+        window.setTimeout(function() {
+            $('a[href$=".com/javascript-charts/"]').remove();
+        }, 2000);
+    </script>
+
 </head>
 
 <body>
@@ -68,26 +73,28 @@
   <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
   -->
 
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/amcharts.js"></script>
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/serial.js"></script>
+    <script type="text/javascript" src="/bower_components/amstock3/amcharts/amstock.js"></script>
+    <script type="text/javascript" src="/bower_components/amcharts-angular/dist/amChartsDirective.js"></script>
 
- 
-    <script src="/app.js"></script>
-    <script src="/views/settings/settings.js"></script>
-    <script src="/views/home/home.js"></script>
-    <script src="/views/wallets/wallets.js"></script>
-    <script src="/components/buy/buy.js"></script>
-    <script src="/components/sell/sell.js"></script>
-    <script src="/components/enabled-exchanges/enabled-exchanges.js"></script>
-    <script src="/components/version/version.js"></script>
-    <script src="/components/buy-orders/buy-orders.js"></script>
-    <script src="/components/sell-orders/sell-orders.js"></script>
-    <script src="/components/version/version-directive.js"></script>
-    <script src="/components/version/interpolate-filter.js"></script>
-    <script src="/components/helpers/stringUtils.js"></script>
-    <script src="/components/helpers/webSocket.js"></script>
-    <script src="/components/charts/market-depth/market-depth.js"></script>
+    <script type="text/javascript" src="/app.js"></script>
+    <script type="text/javascript" src="/views/settings/settings.js"></script>
+    <script type="text/javascript" src="/views/home/home.js"></script>
+    <script type="text/javascript" src="/views/wallets/wallets.js"></script>
+    <script type="text/javascript" src="/components/buy/buy.js"></script>
+    <script type="text/javascript" src="/components/sell/sell.js"></script>
+    <script type="text/javascript" src="/components/enabled-exchanges/enabled-exchanges.js"></script>
+    <script type="text/javascript" src="/components/version/version.js"></script>
+    <script type="text/javascript" src="/components/buy-orders/buy-orders.js"></script>
+    <script type="text/javascript" src="/components/sell-orders/sell-orders.js"></script>
+    <script type="text/javascript" src="/components/version/version-directive.js"></script>
+    <script type="text/javascript" src="/components/version/interpolate-filter.js"></script>
+    <script type="text/javascript" src="/components/helpers/stringUtils.js"></script>
+    <script type="text/javascript" src="/components/helpers/webSocket.js"></script>
+    <script type="text/javascript" src="/components/charts/market-depth-angular/market-depth-angular.js"></script>
+    <script type="text/javascript" src="/components/charts/market-depth-amchart/market-depth-amchart.js"></script>
 
-   <script src="/bower_components/zingchart/client/zingchart.min.js" ></script>
-    <script src="/bower_components/zingchart-angularjs/src/zingchart-angularjs.js" ></script>
 
 </body>
 

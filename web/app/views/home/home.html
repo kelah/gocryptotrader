@@ -1,5 +1,5 @@
 <div class="col-md-12">
-    
+
     <div ng-show="loaded">
         <div class="col-md-12">
             <h2>{{exchange.exchangeName}} Exchange</h2>
@@ -12,7 +12,7 @@
                     <h3>Sell orders</h3>
                     <!--plceholder-->
                     <sellorders></sellorders>
-                    
+
                 </div>
                 <div class="col-md-6" style=" height: 300px;">
                     <h3>Buy orders</h3>
@@ -22,7 +22,7 @@
             <!-- need to do better than hardcoded heights mannn! -->
             <div class="col-md-12" style="height:660px">
                 <h3>Market depth chart</h3>
-                <chartmarketdepth></chartmarketdepth>
+                <ammarketdepth></ammarketdepth>
             </div>
             <div class="col-md-4">
                 <h4>Buy</h4>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="col-md-4">
-                <enabledexchanges></enabledexchanges>
+            <enabledexchanges></enabledexchanges>
         </div>
     </div>
     <div ng-show="!loaded && !loadFailed" class="col-md-12 text-center">

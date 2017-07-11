@@ -1,5 +1,5 @@
 
-angular.module('myApp.sell',[]).component('sell', {
+angular.module('goCryptoWeb.sell',[]).component('sell', {
   templateUrl: '/components/sell/sell.html',
   controller:'SellController',
   controller: function ($scope, $http, Notification, $rootScope) {
@@ -15,7 +15,7 @@ angular.module('myApp.sell',[]).component('sell', {
      });
 
     $scope.GetLatestDataFromExchangeCurrency = function () {
-       $http.get('/GetLatestDataFromExchangeCurrency?exhange=' + $scope.exchange.exchangeName + '&currency='+ $scope.currency.CurrencyPair).success(function (data) {
+       $http.get('/GetLatestDataFromExchangeCurrency?exhange=' + $scope.exchange.exchangeName + '&currency='+ $scope.currency.CurrencyPair).then(function (data) {
          $scope.currency.Last = data.Last;
          $scope.currency.Volume = data.Volume;
           $scope.currency.Bid = data.Bid;
@@ -29,8 +29,8 @@ angular.module('myApp.sell',[]).component('sell', {
        obj.Currency = $scope.currency;
        obj.Price = $scope.price;
        obj.Amount = $scope.amount;
-       $http.post('/Command/PlaceSellOrder', obj).success(function (response) {
-         Notification.success("Successfully placed order");
+       $http.post('/Command/PlaceSellOrder', obj).then(function (response) {
+         Notification.then("Successfully placed order");
        });
      };
   }

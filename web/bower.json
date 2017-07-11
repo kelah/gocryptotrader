@@ -1,20 +1,25 @@
 {
-  "name": "angular-seed",
-  "description": "A starter project for AngularJS",
-  "version": "0.0.0",
-  "homepage": "https://github.com/angular/angular-seed",
+  "name": "gocryptotrader",
+  "description": "A cyptocurrency trader application",
+  "version": "0.1.0",
+  "homepage": "https://github.com/thrasher-/gocryptotrader",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "angular": "~1.5.0",
-    "angular-route": "~1.5.0",
-    "angular-loader": "~1.5.0",
-    "angular-mocks": "~1.5.0",
+    "angular": "~1.6.4",
+    "angular-route": "~1.6.4",
+    "angular-loader": "~1.6.4",
+    "angular-mocks": "~1.6.4",
     "html5-boilerplate": "^5.3.0",
-	"angular-ui-notification":"latest",
-	"angular-websocket":"2.0.0",
-	"bootstrap":"3.3.7",
-	"zingchart":"latest",
-	"zingchart-angularjs":"latest"
+    "angular-ui-notification": "latest",
+    "angular-websocket": "2.0.0",
+    "bootstrap": "3.3.7",
+    "chart.js": "^2.5.0",
+    "angular-chart.js": "^1.1.1",
+    "amstock3": "3.21.1",
+    "amcharts-angular": "*"
+  },
+  "resolutions": {
+    "angular": "1.x"
   }
 }

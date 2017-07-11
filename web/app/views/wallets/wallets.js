@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.wallets', ['ngRoute'])
+angular.module('goCryptoWeb.wallets', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/wallets', {

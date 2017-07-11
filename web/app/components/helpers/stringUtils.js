@@ -1,4 +1,4 @@
-angular.module('myApp.stringUtils', [])
+angular.module('goCryptoWeb.stringUtils', [])
     .filter('removeSpaces', [function() {
         return function(string) {
             if (!angular.isString(string)) {
