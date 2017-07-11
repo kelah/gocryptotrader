@@ -16,9 +16,9 @@ import (
 )
 
 const (
-	CONFIG_FILE     = "config.dat"
-	OLD_CONFIG_FILE = "config.json"
-	CONFIG_TEST     = "../testdata/configtest.dat"
+	CONFIG_FILE      = "config.dat"
+	OLD_CONFIG_FILE  = "config.json"
+	CONFIG_TEST_FILE = "../testdata/configtest.dat"
 
 	CONFIG_FILE_ENCRYPTION_PROMPT   = 0
 	CONFIG_FILE_ENCRYPTION_ENABLED  = 1
@@ -168,7 +168,7 @@ func (c *Config) CheckExchangeConfigValues() error {
 					c.Exchanges[i].AuthenticatedAPISupport = false
 					log.Printf(WarningExchangeAuthAPIDefaultOrEmptyValues, exch.Name)
 					continue
-				} else if exch.Name == "ITBIT" || exch.Name == "Bitstamp" || exch.Name == "Coinbase" {
+				} else if exch.Name == "ITBIT" || exch.Name == "Bitstamp" || exch.Name == "COINUT" || exch.Name == "GDAX" {
 					if exch.ClientID == "" || exch.ClientID == "ClientID" {
 						c.Exchanges[i].AuthenticatedAPISupport = false
 						log.Printf(WarningExchangeAuthAPIDefaultOrEmptyValues, exch.Name)

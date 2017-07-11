@@ -4,9 +4,13 @@
 [![GoDoc](https://godoc.org/github.com/thrasher-/gocryptotrader?status.svg)](https://godoc.org/github.com/thrasher-/gocryptotrader)
 [![Coverage Status](http://codecov.io/github/thrasher-/gocryptotrader/coverage.svg?branch=master)](http://codecov.io/github/thrasher-/gocryptotrader?branch=master)
 
-A cryptocurrency trading bot supporting multiple exchanges written in Golang. 
+A cryptocurrency trading bot supporting multiple exchanges written in Golang.
 
 **Please note that this bot is under development and is not ready for production!**
+
+## Community
+
+Join our slack to discuss all things related to GoCryptoTrader! [GoCryptoTrader](https://gocryptotrader.herokuapp.com/)
 
 ## Exchange Support Table
 
@@ -19,12 +23,13 @@ A cryptocurrency trading bot supporting multiple exchanges written in Golang.
 | BTCC | Yes  | Yes     | No  |
 | BTCE     | Yes  | NA        | NA  |
 | BTCMarkets | Yes | NA       | NA  |
+| COINUT | Yes | No | NA |
 | GDAX(Coinbase) | Yes | Yes | No|
 | Gemini | Yes | NA | NA |
 | Huobi | Yes | Yes |No |
 | ItBit | Yes | NA | NA |
 | Kraken | Yes | NA | NA |
-| LakeBTC | Yes | No | NA | 
+| LakeBTC | Yes | No | NA |
 | Liqui | Yes | No | NA |
 | LocalBitcoins | Yes | NA | NA |
 | OKCoin (both) | Yes | Yes | No |
@@ -70,4 +75,3 @@ Run the application!
 
 ## Binaries
 Binaries will be published once the codebase reaches a stable condition.
-
