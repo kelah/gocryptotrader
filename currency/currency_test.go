@@ -58,6 +58,10 @@ func TestIsDefaultCryptocurrency(t *testing.T) {
 func TestIsFiatCurrency(t *testing.T) {
 	t.Parallel()
 
+	if IsFiatCurrency("") {
+		t.Error("Test failed. TestIsFiatCurrency returned true on an empty string")
+	}
+
 	BaseCurrencies = "USD,AUD"
 	var str1, str2, str3 string = "BTC", "USD", "birds123"
 
@@ -80,6 +84,10 @@ func TestIsFiatCurrency(t *testing.T) {
 
 func TestIsCryptocurrency(t *testing.T) {
 	t.Parallel()
+
+	if IsCryptocurrency("") {
+		t.Error("Test failed. TestIsCryptocurrency returned true on an empty string")
+	}
 
 	CryptoCurrencies = "BTC,LTC,DASH"
 	var str1, str2, str3 string = "USD", "BTC", "pterodactyl123"
@@ -256,6 +264,7 @@ func TestCheckAndAddCurrency(t *testing.T) {
 }
 
 func TestSeedCurrencyData(t *testing.T) {
+	yahooEnabled = true
 	currencyRequestDefault := ""
 	currencyRequestUSDAUD := "USD,AUD"
 	currencyRequestObtuse := "WigWham"
@@ -274,14 +283,18 @@ func TestSeedCurrencyData(t *testing.T) {
 			err2, currencyRequestUSDAUD,
 		)
 	}
-	if yahooEnabled {
-		err3 := SeedCurrencyData(currencyRequestObtuse)
-		if err3 == nil {
-			t.Errorf(
-				"Test Failed. SeedCurrencyData: Error %s with currency as %s.",
-				err3, currencyRequestObtuse,
-			)
-		}
+	err3 := SeedCurrencyData(currencyRequestObtuse)
+	if err3 == nil {
+		t.Errorf(
+			"Test Failed. SeedCurrencyData: Error %s with currency as %s.",
+			err3, currencyRequestObtuse,
+		)
+	}
+
+	yahooEnabled = false
+	err = SeedCurrencyData("")
+	if err != nil {
+		t.Errorf("Test failed. SeedCurrencyData via Fixer. Error: %s", err)
 	}
 }
 
@@ -299,30 +312,67 @@ func TestMakecurrencyPairs(t *testing.T) {
 }
 
 func TestConvertCurrency(t *testing.T) {
+	yahooEnabled = true
 	fiatCurrencies := DefaultCurrencies
 	for _, currencyFrom := range common.SplitStrings(fiatCurrencies, ",") {
 		for _, currencyTo := range common.SplitStrings(fiatCurrencies, ",") {
-			if currencyFrom == currencyTo {
-				continue
-			} else {
-				floatyMcfloat, err := ConvertCurrency(1000, currencyFrom, currencyTo)
-				if err != nil {
-					t.Errorf(
-						"Test Failed. ConvertCurrency: Error %s with return: %.2f Currency 1: %s Currency 2: %s",
-						err, floatyMcfloat, currencyFrom, currencyTo,
-					)
-				}
-				if reflect.TypeOf(floatyMcfloat).String() != "float64" {
-					t.Error("Test Failed. ConvertCurrency: Error, incorrect return type")
-				}
-				if floatyMcfloat <= 0 {
-					t.Error(
-						"Test Failed. ConvertCurrency: Error, negative return or a serious issue with current fiat",
-					)
-				}
+			floatyMcfloat, err := ConvertCurrency(1000, currencyFrom, currencyTo)
+			if err != nil {
+				t.Errorf(
+					"Test Failed. ConvertCurrency: Error %s with return: %.2f Currency 1: %s Currency 2: %s",
+					err, floatyMcfloat, currencyFrom, currencyTo,
+				)
+			}
+			if reflect.TypeOf(floatyMcfloat).String() != "float64" {
+				t.Error("Test Failed. ConvertCurrency: Error, incorrect return type")
+			}
+			if floatyMcfloat <= 0 {
+				t.Error(
+					"Test Failed. ConvertCurrency: Error, negative return or a serious issue with current fiat",
+				)
 			}
 		}
 	}
+
+	yahooEnabled = false
+	_, err := ConvertCurrency(1000, "USD", "AUD")
+	if err != nil {
+		t.Errorf("Test failed. ConvertCurrency USD -> AUD. Error %s", err)
+	}
+
+	_, err = ConvertCurrency(1000, "AUD", "USD")
+	if err != nil {
+		t.Errorf("Test failed. ConvertCurrency AUD -> AUD. Error %s", err)
+	}
+
+	_, err = ConvertCurrency(1000, "CNY", "AUD")
+	if err != nil {
+		t.Errorf("Test failed. ConvertCurrency USD -> AUD. Error %s", err)
+	}
+
+	// Test non-existant currencies
+
+	_, err = ConvertCurrency(1000, "ASDF", "USD")
+	if err == nil {
+		t.Errorf("Test failed. ConvertCurrency non-existant currency -> USD. Error %s", err)
+	}
+
+	_, err = ConvertCurrency(1000, "USD", "ASDF")
+	if err == nil {
+		t.Errorf("Test failed. ConvertCurrency USD -> non-existant currency. Error %s", err)
+	}
+
+	_, err = ConvertCurrency(1000, "CNY", "UAHF")
+	if err == nil {
+		t.Errorf("Test failed. ConvertCurrency non-USD currency CNY -> non-existant currency. Error %s", err)
+	}
+
+	_, err = ConvertCurrency(1000, "UASF", "UAHF")
+	if err == nil {
+		t.Errorf("Test failed. ConvertCurrency non-existant currency -> non-existant currency. Error %s", err)
+	}
+
+	yahooEnabled = true
 }
 
 func TestFetchFixerCurrencyData(t *testing.T) {
