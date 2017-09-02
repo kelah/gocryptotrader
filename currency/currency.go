@@ -68,7 +68,7 @@ var (
 	ErrCurrencyNotFound       = errors.New("unable to find specified currency")
 	ErrQueryingYahoo          = errors.New("unable to query Yahoo currency values")
 	ErrQueryingYahooZeroCount = errors.New("yahoo returned zero currency data")
-	yahooEnabled              = true
+	yahooEnabled              = false
 )
 
 // IsDefaultCurrency checks if the currency passed in matches the default
@@ -314,6 +314,8 @@ func FetchYahooCurrencyData(currencyPairs []string) error {
 	if err != nil {
 		return err
 	}
+
+	log.Printf("Currency recv: %s", resp)
 
 	yahooResp := YahooJSONResponse{}
 	err = common.JSONDecode([]byte(resp), &yahooResp)
