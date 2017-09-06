@@ -157,35 +157,15 @@ func wsSaveConfig(wsClient *websocket.Conn, data interface{}) error {
 		}
 	}
 
-	//Save change the settings
-	for x := range bot.config.Exchanges {
-		for i := 0; i < len(cfg.Exchanges); i++ {
-			if cfg.Exchanges[i].Name == bot.config.Exchanges[x].Name {
-				bot.config.Exchanges[x].Enabled = cfg.Exchanges[i].Enabled
-				bot.config.Exchanges[x].APIKey = cfg.Exchanges[i].APIKey
-				bot.config.Exchanges[x].APISecret = cfg.Exchanges[i].APISecret
-				bot.config.Exchanges[x].EnabledPairs = cfg.Exchanges[i].EnabledPairs
-			}
+	err = bot.config.UpdateConfig(bot.configFile, cfg)
+	if err != nil {
+		wsResp.Error = err.Error()
+		err = wsClient.WriteJSON(wsResp)
+		if err != nil {
+			return err
 		}
 	}
 
-	//Reload the configuration
-	err = bot.config.SaveConfig(bot.configFile)
-	if err != nil {
-		wsResp.Error = err.Error()
-		err = wsClient.WriteJSON(wsResp)
-		if err != nil {
-			return err
-		}
-	}
-	err = bot.config.LoadConfig(bot.configFile)
-	if err != nil {
-		wsResp.Error = err.Error()
-		err = wsClient.WriteJSON(wsResp)
-		if err != nil {
-			return err
-		}
-	}
 	setupBotExchanges()
 	wsResp.Data = WebsocketResponseSuccess
 	return wsClient.WriteJSON(wsResp)
@@ -252,7 +232,7 @@ func wsGetOrderbook(wsClient *websocket.Conn, data interface{}) error {
 		return err
 	}
 
-	result, err := GetSpecificTicker(orderbookReq.Currency,
+	result, err := GetSpecificOrderbook(orderbookReq.Currency,
 		orderbookReq.Exchange, orderbookReq.AssetType)
 
 	if err != nil {
