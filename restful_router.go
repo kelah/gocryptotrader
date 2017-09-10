@@ -94,6 +94,12 @@ func NewRouter(exchanges []exchange.IBotExchange) *mux.Router {
 			"/exchanges/{exchangeName}/orderbook/latest/{currency}",
 			RESTGetOrderbook,
 		},
+		Route{
+			"ws",
+			"GET",
+			"/ws",
+			WebsocketClientHandler,
+		},
 	}
 
 	for _, route := range routes {

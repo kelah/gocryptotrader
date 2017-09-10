@@ -17,16 +17,6 @@ const (
 	WebsocketResponseSuccess = "OK"
 )
 
-// WebsocketRoutes adds ws route to the HTTP server
-var WebsocketRoutes = Routes{
-	Route{
-		"ws",
-		"GET",
-		"/ws",
-		WebsocketClientHandler,
-	},
-}
-
 // WebsocketClient stores information related to the websocket client
 type WebsocketClient struct {
 	ID            int
