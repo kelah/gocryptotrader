@@ -294,7 +294,7 @@ func WebsocketHandler() {
 					log.Println(err)
 					continue
 				}
-				hashPW := common.HexEncodeToString(common.GetSHA256([]byte(bot.config.Webserver.AdminUsername)))
+				hashPW := common.HexEncodeToString(common.GetSHA256([]byte(bot.config.Webserver.AdminPassword)))
 				if auth.Username == bot.config.Webserver.AdminUsername && auth.Password == hashPW {
 					WebsocketClientHub[x].Authenticated = true
 					wsResp := WebsocketEventResponse{
