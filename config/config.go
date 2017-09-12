@@ -52,10 +52,11 @@ var (
 
 // WebserverConfig struct holds the prestart variables for the webserver.
 type WebserverConfig struct {
-	Enabled       bool
-	AdminUsername string
-	AdminPassword string
-	ListenAddress string
+	Enabled                  bool
+	AdminUsername            string
+	AdminPassword            string
+	ListenAddress            string
+	WebsocketConnectionLimit int
 }
 
 // SMSGlobalConfig structure holds all the variables you need for instant
@@ -239,6 +240,11 @@ func (c *Config) CheckWebserverConfigValues() error {
 	if port < 1 || port > 65355 {
 		return errors.New(WarningWebserverListenAddressInvalid)
 	}
+
+	if c.Webserver.WebsocketConnectionLimit <= 0 {
+		c.Webserver.WebsocketConnectionLimit = 1
+	}
+
 	return nil
 }
 
