@@ -52,11 +52,12 @@ var (
 
 // WebserverConfig struct holds the prestart variables for the webserver.
 type WebserverConfig struct {
-	Enabled                  bool
-	AdminUsername            string
-	AdminPassword            string
-	ListenAddress            string
-	WebsocketConnectionLimit int
+	Enabled                      bool
+	AdminUsername                string
+	AdminPassword                string
+	ListenAddress                string
+	WebsocketConnectionLimit     int
+	WebsocketAllowInsecureOrigin bool
 }
 
 // SMSGlobalConfig structure holds all the variables you need for instant

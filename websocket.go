@@ -63,9 +63,16 @@ func WebsocketClientHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
+
 	upgrader := websocket.Upgrader{
 		WriteBufferSize: 1024,
 		ReadBufferSize:  1024,
+	}
+
+	// Allow insecure origin if the Origin request header is present and not
+	// equal to the Host request header. Default to false
+	if bot.config.Webserver.WebsocketAllowInsecureOrigin {
+		upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	}
 
 	newClient := WebsocketClient{
